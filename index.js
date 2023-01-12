@@ -68,7 +68,7 @@
 //   savePage(data);
 // });
 
-//here comes fetch
+//not working
 // fetch(url)
 //   .then(function (response) {
 //     response.text();
@@ -79,53 +79,27 @@
 //   .catch(function (error) {
 //     console.warn('Something went wrong.', err);
 //   });
-import cheerio from 'cheerio';
-import got from 'got';
+//import cheerio from 'cheerio';
+//import got from 'got';
 import jsdom from 'jsdom';
 import fetch from 'node-fetch';
-import request from 'request';
 
+// import request from 'request';
+
+//fetching html in a string format to htmlContent
 const { JSDOM } = jsdom;
 const url = 'https://memegen-link-examples-upleveled.netlify.app/';
 const response = await fetch(url);
 const htmlContent = await response.text();
-//all html is now in body
-//here comes cheerio
-//const $ = cheerio.load(htmlContent, null, false); // Load markup
-//const imgArr = [];
-// const isImg = (htmlContent) => {
-//   if(typeOf htmlContent.img !== 'undefined') {return htmlContent.push(??)}
-// };
+//console.log(htmlContent);
 
-// got(htmlContent)
-//   .then((response) => {
-//     const dom = new JSDOM(response.body);
-//     dom.window.document.querySelectorAll('a').forEach((link) => {
-//       console.log(link.href);
-//     });
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   });
-const isImg = (url) => {
-  // Return false if there is no href attribute.
-  if (typeof link.href === 'undefined') {
-    return false;
-  }
+//FILTER src from img and getting an array of strings
+const links = htmlContent
+  .split(' ')
+  .filter((w) => w.includes('src="https://') && !w.includes('href='))
+  .join(' ');
+console.log(links);
 
-  return link.href.includes('img');
-};
-got(url)
-  .then((response) => {
-    const dom = new JSDOM(response.body);
-    const imgArr = [...dom.window.document.querySelectorAll('img')];
-    nodeList
-      .filter(isImg)
-      .filter(noParens)
-      .forEach((link) => {
-        console.log(link.href);
-      });
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+//why it's not working?
+// const srcs = htmlContent.split('http').pop().split('300');
+// console.log(srcs);
