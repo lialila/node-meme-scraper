@@ -79,7 +79,7 @@
 //   .catch(function (error) {
 //     console.warn('Something went wrong.', err);
 //   });
-//import cheerio from 'cheerio';
+//import cheerio from 'cheerio'; do i need it?
 //import got from 'got';
 import jsdom from 'jsdom';
 import fetch from 'node-fetch';
@@ -98,8 +98,12 @@ const links = htmlContent
   .split(' ')
   .filter((w) => w.includes('src="https://') && !w.includes('href='))
   .join(' ');
-console.log(links);
+//console.log(links);
 
 //why it's not working?
 // const srcs = htmlContent.split('http').pop().split('300');
 // console.log(srcs);
+
+//split links to strings
+const ArrStrLinks = links.toString().split(' ');
+console.log(ArrStrLinks);
