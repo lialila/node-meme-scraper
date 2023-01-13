@@ -96,14 +96,25 @@ const htmlContent = await response.text();
 //FILTER src from img and getting an array of strings
 const links = htmlContent
   .split(' ')
-  .filter((w) => w.includes('src="https://') && !w.includes('href='))
+  .filter((w) => w.includes('https://') && !w.includes('href='))
+  //.shift('src="')
+  //.slice('src="', '"\n')
+  //.slice(5, -1)
   .join(' ');
 //console.log(links);
 
-//why it's not working?
-// const srcs = htmlContent.split('http').pop().split('300');
-// console.log(srcs);
-
 //split links to strings
-const ArrStrLinks = links.toString().split(' ');
-console.log(ArrStrLinks);
+const arrOfStrLinks = links.toString().split(' ');
+//console.log(arrOfStrLinks);
+
+//slice the first ten
+const tenLinksArr = arrOfStrLinks.slice(0, 10);
+console.log(tenLinksArr);
+//loop them in order to cut the src=" (first 5 chars) and " in the end of strings
+tenLinksArr.forEach((str, i) => (tenLinksArr[i] = str.slice(5)));
+
+//??? tenLinksArr.forEach((str, i) => (tenLinksArr[i] = str.split('src="', '300')));
+
+//tenLinksArr.forEach((str, i) => (tenLinksArr[i] = str.slice(5)));
+//tenLinksArr.forEach((str, i) => (tenLinksArr[i] = str.split('300')[0]));
+//console.log(tenLinksArr);
