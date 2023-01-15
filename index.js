@@ -3,34 +3,33 @@ import fs from 'fs';
 import * as fsExtra from 'fs-extra';
 import fetch from 'node-fetch';
 
-//empty imageees folder before downloading new memes
+// empty imageees folder before downloading new memes
 fsExtra.emptyDirSync('memes');
 
-//fetching html to text(string) format to htmlContent
+// fetching html to text(string) format to htmlContent
 const url = 'https://memegen-link-examples-upleveled.netlify.app/';
 const response = await fetch(url);
 const htmlContent = await response.text();
 fsExtra.emptyDirSync('memes');
 
-//FILTER src from img and getting an array of strings
+// FILTER src from img and getting an array of strings
 const links = htmlContent
   .split(' ')
   .filter((w) => w.includes('https://') && !w.includes('href='));
 const arrLinks = links.map((x) => x.match(/src="([^"]*)/)[1]);
-const filepath = '/memes';
 
-//slice the first ten
+// slice the first ten
 const slicedImgLinks = arrLinks.slice(0, 10);
 
-//async Axios to download the images, return a promise and resolve when download finishes
+// async Axios to download the images, return a promise and resolve when download finishes
 async function downloadImage(url, filepath) {
-  const response = await Axios({
+  const responseA = await Axios({
     url,
     method: 'GET',
     responseType: 'stream',
   });
   return new Promise((resolve, reject) => {
-    response.data
+    responseA.data
       .pipe(fs.createWriteStream(filepath))
       .on('error', reject)
       .once('close', () => resolve(filepath));
