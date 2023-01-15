@@ -1,11 +1,12 @@
 import Axios from 'axios';
 import fs from 'fs';
 import * as fsExtra from 'fs-extra';
-import jsdom from 'jsdom';
 import fetch from 'node-fetch';
 
+//empty imageees folder before downloading new memes
+fsExtra.emptyDirSync('memes');
+
 //fetching html to text(string) format to htmlContent
-const { JSDOM } = jsdom;
 const url = 'https://memegen-link-examples-upleveled.netlify.app/';
 const response = await fetch(url);
 const htmlContent = await response.text();
@@ -17,14 +18,15 @@ const links = htmlContent
   .filter((w) => w.includes('https://') && !w.includes('href='));
 const arrLinks = links.map((x) => x.match(/src="([^"]*)/)[1]);
 const filepath = './memes';
+
 //slice the first ten
 const slicedImgLinks = arrLinks.slice(0, 10);
 //console.log(arrTenLinks);
 // fs.mkdir('./memes', { recursive: true }, (err) => {
 //   if (err) throw err;
 // });
-//async axios to download the images
-// return a promise and resolve when download finishes
+
+//async Axios to download the images, return a promise and resolve when download finishes
 async function downloadImage(url, filepath) {
   const response = await Axios({
     url,
@@ -43,6 +45,3 @@ async function downloadImage(url, filepath) {
 slicedImgLinks.forEach((imgUrl, index) =>
   downloadImage(imgUrl, `memes/${index === 9 ? '' : '0'}${index + 1}.jpg`),
 );
-
-//print out the imgs
-console.log(./memes);
