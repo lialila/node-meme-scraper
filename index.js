@@ -21,10 +21,6 @@ const filepath = './memes';
 
 //slice the first ten
 const slicedImgLinks = arrLinks.slice(0, 10);
-//console.log(arrTenLinks);
-// fs.mkdir('./memes', { recursive: true }, (err) => {
-//   if (err) throw err;
-// });
 
 //async Axios to download the images, return a promise and resolve when download finishes
 async function downloadImage(url, filepath) {
