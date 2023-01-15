@@ -17,7 +17,7 @@ const links = htmlContent
   .split(' ')
   .filter((w) => w.includes('https://') && !w.includes('href='));
 const arrLinks = links.map((x) => x.match(/src="([^"]*)/)[1]);
-const filepath = './memes';
+const filepath = '/memes';
 
 //slice the first ten
 const slicedImgLinks = arrLinks.slice(0, 10);
